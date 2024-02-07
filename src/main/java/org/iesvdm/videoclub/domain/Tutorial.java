@@ -30,8 +30,8 @@ public class Tutorial {
 
     @Column(name = "publi")
     private boolean publicado;
-
-    @OneToMany
+                                    // LAZY es el valor default
+    @OneToMany(mappedBy = "tutorial", fetch = FetchType.LAZY)
     private List<Comentario> comentarios;
 
 }
