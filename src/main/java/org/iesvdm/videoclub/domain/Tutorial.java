@@ -2,19 +2,19 @@ package org.iesvdm.videoclub.domain;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder // Esto es un constructor en cadena de Lombok
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(
         name = "tutorial",
         schema = "videoclub_jpa",
@@ -23,6 +23,7 @@ public class Tutorial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include // Solo utiliza ID para el equals
     private long id;
 
     @Column(name = "titulo", length = 50, nullable = false)
@@ -33,9 +34,13 @@ public class Tutorial {
 
     @Column(name = "publi")
     private boolean publicado;
-                                    // LAZY es el valor default
-    @OneToMany(mappedBy = "tutorial", fetch = FetchType.LAZY)
-    private List<Comentario> comentarios = new ArrayList<>();
+
+    @Column(nullable = false)
+    private Date fechaPublicacion;
+                                    // LAZY as default value // CASCADE ALL
+    @OneToMany(mappedBy = "tutorial", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Comentario> comentarios;
+    // Usamos SET para evitar comentarios duplicados
 
 
     // HELPER AÑADIR:
