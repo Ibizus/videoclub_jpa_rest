@@ -1,14 +1,12 @@
 package org.iesvdm.videoclub.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder // Esto es un constructor en cadena de Lombok
 @Entity
 public class Comentario {
 
